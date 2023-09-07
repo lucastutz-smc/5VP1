@@ -32,7 +32,7 @@ function draw() {
     aantal++;
   }
   if (keyIsDown(LEFT_ARROW)) {
-    aantal--
+    aantal--;
   }
 }
 
