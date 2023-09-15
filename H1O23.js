@@ -7,22 +7,22 @@ function setup() {
   textFont("Verdana");
   textSize(14);
   noStroke();
-  frameRate(50);
+  frameRate(70);
 }
 
 function draw() {
   background('olive');
   
-  if (keyIsDown(UP_ARROW)/*  || keyIsDown(W) */) {
+  if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
     y -= 5;
   }
-  if (keyIsDown(DOWN_ARROW)/*  || keyIsDown(S) */) {
+  if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
     y += 5;
   }
-  if (keyIsDown(LEFT_ARROW)/*  || keyIsDown(A) */) {
+  if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
     x -= 5;
   }
-  if (keyIsDown(RIGHT_ARROW)/*  || keyIsDown(D) */) {
+  if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
     x += 5;
   }
 
@@ -46,7 +46,7 @@ function draw() {
   if (horizontalRange ^ verticalRange) {
     fill('chartreuse');
   } else if (horizontalRange && verticalRange) {
-    fill('green');
+    fill('red');
   } else {
     fill('darkkhaki');
   }
