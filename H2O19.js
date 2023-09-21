@@ -24,7 +24,7 @@ let noMovement;
 let lastMovement;
 
 var animatie = [];
-var aantalBeeldjes = 6;
+var aantalBeeldjes = 7;
 var nummer = 3;
 var frame;
 var xJos = 400;
@@ -70,8 +70,8 @@ function draw() {
     lastMovement = 'vertical';
   }
 
-//De ogen van Jos keren terug als het op stilstaat.
-  if ((keyIsDown(LEFT_ARROW) == false) && (keyIsDown(RIGHT_ARROW) == false) && (keyIsDown(UP_ARROW) == false) && (keyIsDown(DOWN_ARROW) == false)) {
+//De ogen van Jos keren terug als hij op stilstaat.
+  if ((keyIsDown(LEFT_ARROW) == false) && (keyIsDown(RIGHT_ARROW) == false) && (keyIsDown(UP_ARROW) == false) && (keyIsDown(DOWN_ARROW) == false) && (nummer != 6)) {
     noMovement = true;
   } else {
     noMovement = false;
@@ -81,6 +81,10 @@ function draw() {
     nummer = 3;
   } else if (noMovement && lastMovement == "horizontal") {
     nummer = 0;
+  }
+
+  if (keyIsDown(LEFT_ARROW) && keyIsDown(RIGHT_ARROW) &&   keyIsDown(UP_ARROW) && keyIsDown(DOWN_ARROW)) {
+    nummer = 6;
   }
   
   xJos = constrain(xJos,0,width - raster.celGrootte);
