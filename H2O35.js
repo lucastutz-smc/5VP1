@@ -4,17 +4,17 @@ class Raster {
     this.aantalKolommen = k;
     this.celGrootte = null;
   }
-
+  
   berekenCelGrootte() {
-    this.celGrootte = canvas.width/this.aantalKolommen;
+    this.celGrootte = canvas.width / this.aantalKolommen;
   }
   
   teken() {
     push();
     noFill();
     stroke('grey');
-    for (let rij=0;rij<this.aantalRijen;rij++) {
-      for (let kolom=0;kolom<this.aantalKolommen;kolom++) {
+    for (var rij = 0;rij<this.aantalRijen;rij++) {
+      for (var kolom = 0;kolom<this.aantalKolommen;kolom++) {
         rect(kolom*this.celGrootte,rij*this.celGrootte,this.celGrootte,this.celGrootte);
       }
     }
@@ -22,57 +22,36 @@ class Raster {
   }
 }
 
-/* var raster = {
-  aantalRijen: 6,
-  aantalKolommen: 9,
-  celGrootte: null,
-  
-  berekenCelGrootte() {
-    this.celGrootte = canvas.width/this.aantalKolommen;
-  },
-  teken() {
-    push();
-    noFill();
-    stroke('grey');
-    for (rij=0;rij<this.aantalRijen;rij++) {
-      for (kolom=0;kolom<this.aantalKolommen;kolom++) {
-        rect(kolom*this.celGrootte,rij*this.celGrootte,this.celGrootte,this.celGrootte);
-      }
-    }
-    pop();
-  }
-} */
-
 class Jos {
   constructor() {
-    this.x = 400;
-    this.y = 300;
+    this.x = 0;
+    this.y = 200;
     this.animatie = [];
     this.frameNummer =  3;
     this.stapGrootte = null;
     this.gehaald = false;
+    this.aanDeBeurt = true;
   }
   
   beweeg() {
-    if (keyIsDown(LEFT_ARROW)) {
-      this.x -= this.stapGrootte;
-      this.frameNummer = 2;
-    }
     if (keyIsDown(RIGHT_ARROW)) {
       this.x += this.stapGrootte;
       this.frameNummer = 1;
+      this.aanDeBeurt = false;
     }
     if (keyIsDown(UP_ARROW)) {
       this.y -= this.stapGrootte;
       this.frameNummer = 4;
+      this.aanDeBeurt = false;
     }
     if (keyIsDown(DOWN_ARROW)) {
       this.y += this.stapGrootte;
       this.frameNummer = 5;
+      this.aanDeBeurt = false;
     }
     
     this.x = constrain(this.x,0,canvas.width);
-    this.y = constrain(this.y,0,canvas.height - raster.celGrootte);
+    this.y = constrain(this.y,0,canvas.height-raster.celGrootte);
     
     if (this.x == canvas.width) {
       this.gehaald = true;
@@ -116,6 +95,7 @@ class Vijand {
 
 function preload() {
   brug = loadImage("images/backgrounds/dame_op_brug_1800.jpg");
+  wasted = loadImage("images/backgrounds/wastedScreenGTAV.jpg");
 }
 
 function setup() {
@@ -124,13 +104,13 @@ function setup() {
   frameRate(10);
   textFont("Verdana");
   textSize(90);
-
+  
   raster = new Raster(6,9);
   
   raster.berekenCelGrootte();
   
   eve = new Jos();
-  eve.stapGrootte = 1*raster.celGrootte;
+  eve.stapGrootte=1*raster.celGrootte;
   for (var b = 0;b < 6;b++) {
     frameEve = loadImage("images/sprites/Eve100px/Eve_" + b + ".png");
     eve.animatie.push(frameEve);
@@ -140,23 +120,33 @@ function setup() {
   alice.stapGrootte = 1*eve.stapGrootte;
   alice.sprite = loadImage("images/sprites/Alice100px/Alice.png");
 
-  bob = new Vijand(100,500);
-  bob.stapGrootte = eve.stapGrootte;
-  bob.sprite = loadImage('images/sprites/Bob100px/Bob.png')
-  
+  bob = new Vijand(600,400);
+  bob.stapGrootte = 1*eve.stapGrootte;
+  bob.sprite = loadImage("images/sprites/Bob100px/Bob.png");  
 }
 
 function draw() {
   background(brug);
   raster.teken();
-  eve.beweeg();
-  alice.beweeg();
-  bob.beweeg();
+
+  if (eve.aanDeBeurt) {
+    eve.beweeg();
+  } else {
+    alice.beweeg();
+    bob.beweeg();
+    eve.aanDeBeurt = true;
+  }
+  
+  if (alice.x == bob.x && alice == bob.y) {
+    bob.beweeg();
+  }
+  
   eve.toon();
   alice.toon();
   bob.toon();
   
   if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob)) {
+    background(wasted);
     noLoop();
   }
   
@@ -167,3 +157,11 @@ function draw() {
     noLoop();
   }
 }
+
+/* Antwoorden vragen
+
+2. aanDeBeurt. false
+3. Eve beweegt eens en daarna bewegen alleen de vijanden, frameRate per seconde.
+4. eve.aanDeBeurt = true;
+
+*/
