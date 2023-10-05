@@ -56,6 +56,6 @@ function draw() {
 
 2. De knikkers gaan twee keer bewegen per frame, of een verdubbelde snelheid hebben. Klopt.
 3. X positie, Y positie, kleur.
-4. 
+5. Er is meer dan één frame in de tijd die je de mouse opdrukt, dus de code runt meer dan één keer.
 
 */
