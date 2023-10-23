@@ -179,7 +179,7 @@ bommen[0].toon();
   push();
   fill('black');
   textSize(30);
-  text(aantalLevens,30,300);
+  text("Aantaal levens: " + aantalLevens,30,30);
   pop();
   
   if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob)) {
