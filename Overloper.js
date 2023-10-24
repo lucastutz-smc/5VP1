@@ -11,12 +11,13 @@ class Raster {
   
   teken() {
     push();
-    noFill();
-    stroke('grey');
-    for (var rij = 0;rij < this.aantalRijen;rij++) {
+    noFill()
+    ;for (var rij = 0;rij < this.aantalRijen;rij++) {
       for (var kolom = 0;kolom < this.aantalKolommen;kolom++) {
         if (rij = 0 || kolom = 0) {
           stroke('orange')
+        } else { 
+          stroke('grey');
         }
         rect(kolom*this.celGrootte,rij*this.celGrootte,this.celGrootte,this.celGrootte);
       }
@@ -152,6 +153,8 @@ function setup() {
   bob.stapGrootte = 1*eve.stapGrootte;
   bob.sprite = loadImage("images/sprites/Bob100px/Bob.png");  
 
+// Maakt vijf bommen op willekeurige kolommen in het rechter helft van de canvas
+  
   for (let i = 0; i < 5; i++) {
     bommen.push(new Bom(floor(random(0,kolommen/2))*raster.celGrootte+kolommen/2*raster.celGrootte,floor(random(0,rijen))*raster.celGrootte));
     bommen[i].stapGrootte = floor(random(1,4))*eve.stapGrootte;
